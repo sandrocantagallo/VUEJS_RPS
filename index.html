@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <title>RPS - Another Zoom Game</title>
+
+    <!-- Required Stylesheets -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css"
+    />
+
+    
+
+    <!-- Load polyfills to support older browsers -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver"></script>
+
+    <!-- Required scripts -->
+    <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+    <style>
+      #app {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        max-width: 300px;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        font-family: "Open Sans", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Our application root element -->
+    <div id="app">
+      <h1>
+        <i class="fa fa-2x fa-fw" v-bind:class="computedUser"></i>
+        <i class="fa fa-2x fa-fw" v-bind:class="computedRand"></i>
+      </h1>
+    
+      <div>
+        <button @click="choose('rock')">
+          <i class="fa fa-hand-rock-o"></i>
+        </button>
+    
+        <button @click="choose('paper')">
+          <i class="fa fa-hand-paper-o"></i>
+        </button>
+        <button @click="choose('scissors')">
+            <i class="fa fa-hand-scissors-o"></i>
+        </button>
+      </div>
+      <h1>{{ userScore }} - {{ computerScore }}</h1>
+    </div>
+
+    <!-- Start running your app -->
+    <script>
+      var app = new Vue({
+      el: "#app",
+      data: function () {
+        return {
+          userPick: null,
+          randPick: null,
+          userScore: 0,
+          computerScore: 0
+        };
+      },
+      methods: {
+        choose: function (pick) {
+          this.userPick = pick;
+          const picks = ['rock', 'paper', 'scissors'];
+          this.randPick = picks[Math.floor(Math.random() * picks.length)];
+          this.setScore();
+        },
+        setScore: function () {
+          if (this.userPick == 'rock') {
+            if (this.randPick == 'paper') {
+              console.log('Computer wins');
+              this.computerScore++;
+            } else if (this.randPick == 'scissors') {
+              console.log('User wins');
+              this.userScore++;
+            } else {
+              console.log('Draw');
+            }
+          } else if (this.userPick == 'paper') {
+            if (this.randPick == 'rock') {
+              console.log('User wins');
+              this.userScore++;
+            } else if (this.randPick == 'scissors') {
+              console.log('Computer wins');
+              this.computerScore++;
+            } else {
+              console.log('Draw');
+            }
+          } else {
+            if (this.randPick == 'rock') {
+              console.log('Computer wins');
+              this.computerScore++;
+            } else if (this.randPick == 'paper') {
+              console.log('User wins');
+              this.userScore++;
+            } else {
+              console.log('Draw');
+            }
+          }
+        }
+      },
+      computed: {
+        computedUser: function () {
+          return {
+            "fa-circle-o-notch fa-spin": this.userPick === null,
+            "fa-hand-rock-o": this.userPick === "rock",
+            "fa-hand-paper-o": this.userPick === "paper",
+            "fa-hand-scissors-o": this.userPick === "scissors"
+          };
+        },
+        computedRand: function () {
+          return {
+            "fa-circle-o-notch fa-spin": this.randPick === null,
+            "fa-hand-rock-o": this.randPick === "rock",
+            "fa-hand-paper-o": this.randPick === "paper",
+            "fa-hand-scissors-o": this.randPick === "scissors"
+          };
+        }
+      }
+    });
+    </script>
+  </body>
+</html>
